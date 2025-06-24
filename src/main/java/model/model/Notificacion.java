@@ -4,12 +4,14 @@ import java.time.LocalDate;
 
 public class Notificacion {
     private int id;
+    private int userId;
     private String mensaje;
     private LocalDate fecha;
     private boolean leido;
 
-    public Notificacion(int id, String mensaje, LocalDate fecha, boolean leido) {
+    public Notificacion(int id, int userId, String mensaje, LocalDate fecha, boolean leido) {
         this.id = id;
+        this.userId = userId;
         this.mensaje = mensaje;
         this.fecha = fecha;
         this.leido = leido;
@@ -45,5 +47,13 @@ public class Notificacion {
 
     public void setLeido(boolean leido) {
         this.leido = leido;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
