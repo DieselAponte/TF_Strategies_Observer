@@ -69,7 +69,7 @@
                     <CheckBox fx:id="cbConstruccion" text="Construcción" />
                     <CheckBox fx:id="cbVentas" text="Ventas" />
                     <CheckBox fx:id="cbTransporte" text="Transporte" />
-                    <CheckBox fx:id="cbModernas" text="Modernas" />
+                    <CheckBox fx:id="cbMudanzas" text="Mudanzas" />
                 </VBox>
 
                 <Label styleClass="filter-section-title" text="Experiencia" />

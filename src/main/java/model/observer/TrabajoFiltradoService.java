@@ -52,9 +52,9 @@ public class TrabajoFiltradoService implements FiltroObserver {
             trabajos = es.filter(trabajos);
 
         // Filtro adicional: validar si usuario cumple la experiencia mínima requerida por cada trabajo
-        trabajos = trabajos.stream()
-                .filter(t -> experienciaCumple(t, experienciasUsuario))
-                .toList();
+//        trabajos = trabajos.stream()
+//                .filter(t -> experienciaCumple(t, experienciasUsuario))
+//                .toList();
 
         mostrarEnVista.accept(trabajos);
     }

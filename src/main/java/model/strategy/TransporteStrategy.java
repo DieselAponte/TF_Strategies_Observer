@@ -1,6 +1,4 @@
 package model.strategy;
-
-
 import model.model.Trabajo;
 
 import java.util.List;

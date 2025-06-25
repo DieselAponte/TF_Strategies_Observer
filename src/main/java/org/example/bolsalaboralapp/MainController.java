@@ -17,7 +17,7 @@ import java.util.*;
 public class MainController {
 
     // Filtros
-    @FXML private CheckBox cbConstruccion, cbVentas, cbTransporte, cbModernas;
+    @FXML private CheckBox cbConstruccion, cbVentas, cbTransporte, cbMudanzas;
     @FXML private CheckBox cbUnAnio, cbDosCinco, cbSeisOMas;
     @FXML private CheckBox cbSueldo950, cbSueldo1025, cbSueldo1200;
     @FXML private Button btnActualizarBusqueda;
@@ -141,7 +141,7 @@ public class MainController {
         if (cbConstruccion.isSelected()) filtroService.agregarFiltroCategoria(new ConstruccionStrategy());
         if (cbVentas.isSelected()) filtroService.agregarFiltroCategoria(new VentasStrategy());
         if (cbTransporte.isSelected()) filtroService.agregarFiltroCategoria(new TransporteStrategy());
-        if (cbModernas.isSelected()) filtroService.agregarFiltroCategoria(new MudanzaStrategy());
+        if (cbMudanzas.isSelected()) filtroService.agregarFiltroCategoria(new MudanzaStrategy());
 
         if (cbUnAnio.isSelected()) filtroService.agregarFiltroExperiencia(new MaxUnAnioTrabajoStrategy());
         if (cbDosCinco.isSelected()) filtroService.agregarFiltroExperiencia(new DosACincoAniosTrabajoStrategy());

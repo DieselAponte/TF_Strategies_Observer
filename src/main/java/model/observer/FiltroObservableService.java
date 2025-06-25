@@ -28,7 +28,7 @@ public class FiltroObservableService {
     public void agregarFiltroCategoria(CategoryStrategy filtro) {
         if (!categoriaFilters.contains(filtro)) {
             categoriaFilters.add(filtro);
-            notificar();
+//            notificar();
         }
     }
 
