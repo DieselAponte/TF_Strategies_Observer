@@ -8,37 +8,46 @@ import model.repository.ExperienciaRepository;
 
 public class AñadirExperienciaController {
 
-    @FXML private TextField campoPuesto, campoEmpresa;
-    @FXML private TextArea  campoDescripcion;
-    @FXML private DatePicker campoFechaInicio, campoFechaFin;
+    /* ---------- FXML ---------- */
+    @FXML private TextField  campoPuesto;
+    @FXML private TextField  campoEmpresa;
+    @FXML private TextArea   campoDescripcion;
+    @FXML private DatePicker campoFechaInicio;
+    @FXML private DatePicker campoFechaFin;
 
+    /* ---------- Inyectados desde PerfilController ---------- */
     private int usuarioId;
     private ExperienciaRepository repo;
     private PerfilController perfilController;
 
+    /** Llamado por PerfilController inmediatamente después de cargar el FXMLLoader */
     public void init(int usuarioId, ExperienciaRepository repo, PerfilController perfilController) {
-        this.usuarioId = usuarioId;
-        this.repo = repo;
+        this.usuarioId        = usuarioId;
+        this.repo             = repo;
         this.perfilController = perfilController;
     }
 
+    /* ---------- Acciones ---------- */
     @FXML
     private void guardarExperiencia() {
         if (!validar()) return;
 
         repo.guardar(new ConcreteExperienciaBuilder()
-                .setProfileId(usuarioId)
+                .setProfileId(usuarioId)                       // nombre correcto
+                .setPosition(campoPuesto.getText())
+                .setCompany(campoEmpresa.getText())
                 .setDescription(campoDescripcion.getText())
                 .setFechaInicio(campoFechaInicio.getValue())
                 .setFechaFin(campoFechaFin.getValue())
                 .build());
 
-        perfilController.actualizarListaExperiencias(); // para que refresque
-        cerrarVentana();
-
+        perfilController.actualizarListaExperiencias();        // refresca vista principal
         cerrarVentana();
     }
 
+    @FXML private void cancelar() { cerrarVentana(); }
+
+    /* ---------- Validación simple ---------- */
     private boolean validar() {
         if (campoPuesto.getText().isBlank() || campoEmpresa.getText().isBlank()) {
             new Alert(Alert.AlertType.WARNING, "Puesto y Empresa son obligatorios").showAndWait();
@@ -55,8 +64,7 @@ public class AñadirExperienciaController {
         return true;
     }
 
-    @FXML private void cancelar()       { cerrarVentana(); }
-    private void cerrarVentana()        { ((Stage) campoPuesto.getScene().getWindow()).close(); }
-
-
+    private void cerrarVentana() {
+        ((Stage) campoPuesto.getScene().getWindow()).close();
+    }
 }

@@ -1,6 +1,5 @@
 package model.repository;
 
-import model.model.CategoriaTrabajo;
 import model.model.Trabajo;
 
 import java.util.List;

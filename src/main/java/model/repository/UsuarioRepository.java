@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository {
-    void guardar(Usuario usuario);
+    boolean guardar(Usuario usuario);
     Optional<Usuario> buscarPorId(int id);
     Optional<Usuario> buscarPorNombreUsuario(String username);
     List<Usuario> listarTodos();

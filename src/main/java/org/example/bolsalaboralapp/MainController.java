@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.model.Experiencia;
 import model.model.Trabajo;
 import model.observer.FiltroObservableService;
 import model.repository.ExperienciaRepository;
@@ -12,19 +11,19 @@ import model.repository.TrabajoRepository;
 import model.strategy.*;
 import model.observer.TrabajoFiltradoService;
 
-import java.util.List;
+import java.net.URL;
+import java.util.*;
 
 public class MainController {
 
-    // CheckBoxes de filtros
+    // Filtros
     @FXML private CheckBox cbConstruccion, cbVentas, cbTransporte, cbModernas;
     @FXML private CheckBox cbUnAnio, cbDosCinco, cbSeisOMas;
     @FXML private CheckBox cbSueldo950, cbSueldo1025, cbSueldo1200;
+    @FXML private Button btnActualizarBusqueda;
 
-    // Panel central (lista de trabajos)
+    // Panel trabajos y detalle
     @FXML private ListView<Trabajo> jobsListView;
-
-    // Panel derecho (detalle del trabajo)
     @FXML private Label lblTitulo, lblEmpresa, lblUbicacion;
     @FXML private TextArea txtDescripcion;
     @FXML private VBox jobInfoBox;
@@ -32,7 +31,6 @@ public class MainController {
     // Servicios
     private FiltroObservableService filtroService;
     private TrabajoFiltradoService trabajoFiltradoService;
-
     private TrabajoRepository trabajoRepository;
     private ExperienciaRepository experienciaRepository;
     private int perfilId;
@@ -55,24 +53,25 @@ public class MainController {
 
         filtroService.agregarObserver(trabajoFiltradoService);
 
-        configurarFiltros();
+//        configurarFiltros();
         configurarListView();
+        cargarTodosLosTrabajos(); // Carga inicial al abrir la vista
     }
 
-    private void configurarFiltros() {
-        cbConstruccion.setOnAction(e -> toggleCategoria(cbConstruccion, new ConstruccionStrategy()));
-        cbVentas.setOnAction(e -> toggleCategoria(cbVentas, new VentasStrategy()));
-        cbTransporte.setOnAction(e -> toggleCategoria(cbTransporte, new TransporteStrategy()));
-        cbModernas.setOnAction(e -> toggleCategoria(cbModernas, new MudanzaStrategy()));
-
-        cbUnAnio.setOnAction(e -> toggleExperiencia(cbUnAnio, new MaxUnAnioTrabajoStrategy()));
-        cbDosCinco.setOnAction(e -> toggleExperiencia(cbDosCinco, new DosACincoAniosTrabajoStrategy()));
-        cbSeisOMas.setOnAction(e -> toggleExperiencia(cbSeisOMas, new SeisOMasAniosTrabajoStrategy()));
-
-        cbSueldo950.setOnAction(e -> toggleSalario(cbSueldo950, new SueldoBajoStrategy()));
-        cbSueldo1025.setOnAction(e -> toggleSalario(cbSueldo1025, new SueldoMedioStrategy()));
-        cbSueldo1200.setOnAction(e -> toggleSalario(cbSueldo1200, new SueldoAltoStrategy()));
-    }
+//    private void configurarFiltros() {
+//        cbConstruccion.setOnAction(e -> toggleCategoria(cbConstruccion, new ConstruccionStrategy()));
+//        cbVentas.setOnAction(e -> toggleCategoria(cbVentas, new VentasStrategy()));
+//        cbTransporte.setOnAction(e -> toggleCategoria(cbTransporte, new TransporteStrategy()));
+//        cbModernas.setOnAction(e -> toggleCategoria(cbModernas, new MudanzaStrategy()));
+//
+//        cbUnAnio.setOnAction(e -> toggleExperiencia(cbUnAnio, new MaxUnAnioTrabajoStrategy()));
+//        cbDosCinco.setOnAction(e -> toggleExperiencia(cbDosCinco, new DosACincoAniosTrabajoStrategy()));
+//        cbSeisOMas.setOnAction(e -> toggleExperiencia(cbSeisOMas, new SeisOMasAniosTrabajoStrategy()));
+//
+//        cbSueldo950.setOnAction(e -> toggleSalario(cbSueldo950, new SueldoBajoStrategy()));
+//        cbSueldo1025.setOnAction(e -> toggleSalario(cbSueldo1025, new SueldoMedioStrategy()));
+//        cbSueldo1200.setOnAction(e -> toggleSalario(cbSueldo1200, new SueldoAltoStrategy()));
+//    }
 
     private void configurarListView() {
         jobsListView.setCellFactory(lv -> new ListCell<>() {
@@ -107,6 +106,8 @@ public class MainController {
         if (!trabajos.isEmpty()) {
             jobsListView.getSelectionModel().selectFirst();
             mostrarDetalleTrabajo(null);
+        } else {
+            limpiarDetalleTrabajo();
         }
     }
 
@@ -114,11 +115,46 @@ public class MainController {
         Trabajo seleccionado = jobsListView.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             lblTitulo.setText(seleccionado.getTitulo());
-            lblEmpresa.setText("Empresa: " + seleccionado.getDescripcion()); // Puedes adaptar
-            lblUbicacion.setText("Ubicación: " + seleccionado.getTipo());    // Según tu modelo
+            lblEmpresa.setText("Empresa: " + seleccionado.getDescripcion()); // Cambia si hay campo empresa
+            lblUbicacion.setText("Ubicación: " + seleccionado.getTipo());    // Cambia si hay campo ubicación
             txtDescripcion.setText(seleccionado.getDescripcion());
         }
     }
+
+    private void limpiarDetalleTrabajo() {
+        lblTitulo.setText("Título del trabajo");
+        lblEmpresa.setText("Empresa");
+        lblUbicacion.setText("Ubicación");
+        txtDescripcion.clear();
+    }
+
+    private void cargarTodosLosTrabajos() {
+        List<Trabajo> trabajos = trabajoRepository.listarTodos();
+        actualizarVistaConTrabajos(trabajos);
+    }
+
+    @FXML
+    private void actualizarBusqueda() {
+        filtroService.limpiarFiltros(); // Limpiar filtros anteriores
+
+        // Aplicar filtros seleccionados manualmente
+        if (cbConstruccion.isSelected()) filtroService.agregarFiltroCategoria(new ConstruccionStrategy());
+        if (cbVentas.isSelected()) filtroService.agregarFiltroCategoria(new VentasStrategy());
+        if (cbTransporte.isSelected()) filtroService.agregarFiltroCategoria(new TransporteStrategy());
+        if (cbModernas.isSelected()) filtroService.agregarFiltroCategoria(new MudanzaStrategy());
+
+        if (cbUnAnio.isSelected()) filtroService.agregarFiltroExperiencia(new MaxUnAnioTrabajoStrategy());
+        if (cbDosCinco.isSelected()) filtroService.agregarFiltroExperiencia(new DosACincoAniosTrabajoStrategy());
+        if (cbSeisOMas.isSelected()) filtroService.agregarFiltroExperiencia(new SeisOMasAniosTrabajoStrategy());
+
+        if (cbSueldo950.isSelected()) filtroService.agregarFiltroSalario(new SueldoBajoStrategy());
+        if (cbSueldo1025.isSelected()) filtroService.agregarFiltroSalario(new SueldoMedioStrategy());
+        if (cbSueldo1200.isSelected()) filtroService.agregarFiltroSalario(new SueldoAltoStrategy());
+
+        // 🔔 Solo aquí se notifica a los observers (filtrado y refresco)
+        filtroService.notificar();
+    }
+
 
     @FXML
     private void postularme() {
@@ -132,18 +168,16 @@ public class MainController {
         }
     }
 
-    @FXML
-    private void mostrarPerfil() {
+    // Botones navegación
+    @FXML private void mostrarPerfil() {
         SceneManager.cambiarVista("perfil-view.fxml", "Mi Perfil");
     }
 
-    @FXML
-    private void mostrarNotificaciones() {
+    @FXML private void mostrarNotificaciones() {
         SceneManager.cambiarVista("notificaciones-view.fxml", "Notificaciones");
     }
 
-    @FXML
-    private void mostrarPostulaciones() {
+    @FXML private void mostrarPostulaciones() {
         SceneManager.cambiarVista("postulaciones-view.fxml", "Mis Postulaciones");
     }
 }

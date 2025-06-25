@@ -1,5 +1,6 @@
 package model.repository;
 
+import javafx.scene.control.Alert;
 import model.model.Usuario;
 
 import java.sql.*;
@@ -16,14 +17,22 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    public void guardar(Usuario usuario) {
-        String sql = "INSERT INTO usuario (nombre_usuario, contrasena) VALUES (?, ?)";
+    public boolean guardar(Usuario usuario) {
+        final String sql = "INSERT INTO usuario (correo, password, nombre) VALUES (?, ?, ?)";
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, usuario.getNombreCompleto());
-            stmt.setString(2, usuario.getContrasena());
-            stmt.executeUpdate();
+            stmt.setString(1, usuario.getCorreo());
+            stmt.setString(2, usuario.getContrasena().trim());      // username = correo
+            stmt.setString(3, usuario.getNombreCompleto().trim());  // **MUY recomendable hashearla**
+
+            int filas = stmt.executeUpdate();                   // devuelve 1 si insertó
+            return filas == 1;
         } catch (SQLException e) {
-            e.printStackTrace(); // Manejo mejorable
+            // Muestra un diálogo y registra el problema
+            new Alert(Alert.AlertType.ERROR,
+                    "No se pudo crear la cuenta:\n" + e.getMessage()).showAndWait();
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -38,9 +47,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         rs.getInt("id"),
                         rs.getString("nombre_usuario"),
                         rs.getString("correo"),
-                        rs.getString("contrasena"),
-                        rs.getString("distrito"),
-                        rs.getString("telefono")
+                        rs.getString("contrasena")
                 );
                 return Optional.of(usuario);
             }
@@ -61,9 +68,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         rs.getInt("id"),
                         rs.getString("nombre_usuario"),
                         rs.getString("correo"),
-                        rs.getString("contrasena"),
-                        rs.getString("distrito"),
-                        rs.getString("telefono")
+                        rs.getString("contrasena")
                 );
                 return Optional.of(usuario);
             }
@@ -84,9 +89,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         rs.getInt("id"),
                         rs.getString("nombre_usuario"),
                         rs.getString("correo"),
-                        rs.getString("contrasena"),
-                        rs.getString("distrito"),
-                        rs.getString("telefono")
+                        rs.getString("contrasena")
                 ));
             }
         } catch (SQLException e) {
@@ -96,13 +99,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    public boolean verificarCredenciales(String username, String password) {
-        String sql = "SELECT * FROM usuario WHERE nombre_usuario = ? AND contrasena = ?";
+    public boolean verificarCredenciales(String correo, String password) {
+        String sql = "SELECT * FROM usuario WHERE correo = ? AND password = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, username);
+            stmt.setString(1, correo);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // existe una fila = credenciales válidas
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -66,50 +66,50 @@
             <VBox maxWidth="250" minWidth="163.0" prefHeight="565.0" prefWidth="163.0" spacing="15" styleClass="filters-panel">
                 <Label styleClass="filter-section-title" text="Tipo" />
                 <VBox spacing="5" styleClass="filter-group">
-                    <CheckBox text="Construcción" />
-                    <CheckBox text="Ventas" />
-                    <CheckBox text="Transporte" />
-                    <CheckBox text="Modernas" />
+                    <CheckBox fx:id="cbConstruccion" text="Construcción" />
+                    <CheckBox fx:id="cbVentas" text="Ventas" />
+                    <CheckBox fx:id="cbTransporte" text="Transporte" />
+                    <CheckBox fx:id="cbModernas" text="Modernas" />
                 </VBox>
 
                 <Label styleClass="filter-section-title" text="Experiencia" />
                 <VBox spacing="5" styleClass="filter-group">
-                    <CheckBox text="1 año" />
-                    <CheckBox text="2 - 5 años" />
-                    <CheckBox text="6 años a más" />
+                    <CheckBox fx:id="cbUnAnio" text="1 año" />
+                    <CheckBox fx:id="cbDosCinco" text="2 - 5 años" />
+                    <CheckBox fx:id="cbSeisOMas" text="6 años a más" />
                 </VBox>
 
                 <Label styleClass="filter-section-title" text="Sueldo" />
                 <VBox spacing="5" styleClass="filter-group">
-                    <CheckBox text="950 soles" />
-                    <CheckBox text="1025 soles" />
-                    <CheckBox text="1200 soles" />
+                    <CheckBox fx:id="cbSueldo950" text="950 soles" />
+                    <CheckBox fx:id="cbSueldo1025" text="1025 soles" />
+                    <CheckBox fx:id="cbSueldo1200" text="1200 soles" />
                 </VBox>
+
+                <Button fx:id="btnActualizarBusqueda" text="Actualizar Búsqueda" onAction="#actualizarBusqueda" />
             </VBox>
+
+
 
             <!-- Lista de trabajos (centro) -->
             <VBox maxWidth="400" minWidth="300" prefHeight="565.0" prefWidth="393.0" spacing="15" styleClass="jobs-list-panel">
                 <Label styleClass="section-title" text="Puestos de Trabajo" />
-                <ListView prefHeight="487.0" prefWidth="300.0" styleClass="jobs-list-view">
+                <ListView fx:id="jobsListView" prefHeight="487.0" prefWidth="300.0" styleClass="jobs-list-view">
                     <!-- Los items se cargarán dinámicamente -->
                 </ListView>
             </VBox>
 
             <!-- Detalles del trabajo (derecha) -->
             <VBox spacing="15" styleClass="job-detail-panel" HBox.hgrow="ALWAYS">
-                <Label styleClass="job-title" text="Título del trabajo" />
-                <Label styleClass="job-company" text="Empresa" />
-                <Label styleClass="job-location" text="Ubicación" />
+                <Label fx:id="lblTitulo" styleClass="job-title" text="Título del trabajo" />
+                <Label fx:id="lblEmpresa" styleClass="job-company" text="Empresa" />
+                <Label fx:id="lblUbicacion" styleClass="job-location" text="Ubicación" />
 
                 <Label styleClass="job-section-label" text="Descripción" />
-                <TextArea editable="false" prefHeight="150" prefRowCount="5" styleClass="job-description" text="Descripción del puesto" wrapText="true" />
+                <TextArea fx:id="txtDescripcion" editable="false" prefHeight="150" prefRowCount="5"
+                          styleClass="job-description" text="Descripción del puesto" wrapText="true" />
                 <Button onAction="#postularme" styleClass="primary-button" text="Postularme" />
 
-                <VBox spacing="5" styleClass="job-info">
-                    <Label text="• Contrato por Inicio o Incremento de Actividad" />
-                    <Label text="• Tiempo completo" />
-                    <Label text="• Presencial" />
-                </VBox>
 
                 <Label styleClass="job-highlight" text="¡Buscamos personas con ganas de crecer!" />
             </VBox>

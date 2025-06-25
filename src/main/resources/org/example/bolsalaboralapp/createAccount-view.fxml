@@ -35,14 +35,21 @@
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
                 </columnConstraints>
 
-                <Label styleClass="form-label" text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="txtNuevoUsuario" promptText="Ej: usuario123" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label text="Nombre:"        GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="form-label"/>
+                <TextField fx:id="txtNuevoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                           promptText="Ej: Juan Pérez" styleClass="form-field"/>
 
-                <Label styleClass="form-label" text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <PasswordField fx:id="txtNuevaContraseña" promptText="Mínimo 8 caracteres" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Correo:"         GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="form-label"/>
+                <TextField fx:id="txtCorreo"  GridPane.columnIndex="1" GridPane.rowIndex="1"
+                           promptText="usuario@correo" styleClass="form-field"/>
 
-                <Label styleClass="form-label" text="Confirmar:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <PasswordField fx:id="txtConfirmarContraseña" promptText="Repite tu contraseña" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label text="Contraseña:"          GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="form-label"/>
+                <PasswordField fx:id="txtNuevaContraseña" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                               promptText="Mínimo 8 caracteres" styleClass="form-field"/>
+
+                <Label text="Confirmar:"           GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="form-label"/>
+                <PasswordField fx:id="txtConfirmarContraseña" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                               promptText="Repite tu contraseña" styleClass="form-field"/>
 
                 <rowConstraints>
                     <RowConstraints />

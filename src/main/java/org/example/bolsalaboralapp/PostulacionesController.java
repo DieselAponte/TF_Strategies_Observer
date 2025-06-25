@@ -1,6 +1,6 @@
 package org.example.bolsalaboralapp;
 
-import model.models.*;
+import model.model.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,7 +11,7 @@ import javafx.util.Callback;
 
 public class PostulacionesController {
     @FXML
-    private ListView<Postulation> listaPostulaciones;
+    private ListView<Postulacion> listaPostulaciones;
 
     private MainController mainController;
 

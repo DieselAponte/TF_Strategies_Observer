@@ -1,7 +1,6 @@
 package model.repository;
 
 import model.model.Trabajo;
-import model.repository.TrabajoRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,13 +16,13 @@ public class TrabajoRepositoryImpl implements TrabajoRepository {
 
     @Override
     public void guardar(Trabajo trabajo) {
-        String sql = "INSERT INTO trabajo (titulo, descripcion, tipo, experiencia_requerida, sueldo) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO trabajo (titulo, descripcion, categoria, experiencia_requerida, sueldo) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, trabajo.getTitulo());
             stmt.setString(2, trabajo.getDescripcion());
-            stmt.setString(3, trabajo.getTipo());
+            stmt.setString(3, trabajo.getTipo()); // categoria
             stmt.setString(4, trabajo.getExperienciaRequerida());
-            stmt.setString(5, trabajo.getSueldo());
+            stmt.setDouble(5, trabajo.getSueldo());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,9 +64,9 @@ public class TrabajoRepositoryImpl implements TrabajoRepository {
                 rs.getInt("id"),
                 rs.getString("titulo"),
                 rs.getString("descripcion"),
-                rs.getString("tipo"),
+                rs.getString("categoria"), // tipo
                 rs.getString("experiencia_requerida"),
-                rs.getString("sueldo")
+                rs.getDouble("sueldo")
         );
     }
 }

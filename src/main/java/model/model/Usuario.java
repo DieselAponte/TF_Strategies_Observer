@@ -8,21 +8,21 @@ public class Usuario {
     private String nombreCompleto;
     private String correo;
     private String contrasena;
-    private String distrito;
-    private String telefono;
+//    private String distrito;
+//    private String telefono;
 
     private List<Experiencia> experiencias;
     private List<ArchivoAdjunto> archivos;
     private List<Postulacion> postulaciones;
     private List<Notificacion> notificaciones;
 
-    public Usuario(int id, String nombreCompleto, String correo, String contrasena, String distrito, String telefono ){
+    public Usuario(int id, String nombreCompleto, String correo, String contrasena){
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.contrasena = contrasena;
-        this.distrito = distrito;
-        this.telefono = telefono;
+//        this.distrito = distrito;
+//        this.telefono = telefono;
         this.experiencias = new ArrayList<>();
         this.archivos = new ArrayList<>();
         this.postulaciones = new ArrayList<>();
@@ -57,8 +57,8 @@ public class Usuario {
         return contrasena;
     }
 
-    public void setContrasena(String contraseña) {
-        this.contrasena = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public List<Experiencia> getExperiencias() {
@@ -93,19 +93,19 @@ public class Usuario {
         this.notificaciones = notificaciones;
     }
 
-    public String getDistrito() {
-        return distrito;
-    }
-
-    public void setDistrito(String distrito) {
-        this.distrito = distrito;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+//    public String getDistrito() {
+//        return distrito;
+//    }
+//
+//    public void setDistrito(String distrito) {
+//        this.distrito = distrito;
+//    }
+//
+//    public String getTelefono() {
+//        return telefono;
+//    }
+//
+//    public void setTelefono(String telefono) {
+//        this.telefono = telefono;
+//    }
 }

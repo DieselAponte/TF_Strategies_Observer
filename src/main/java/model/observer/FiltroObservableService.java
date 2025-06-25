@@ -71,8 +71,21 @@ public class FiltroObservableService {
         notificar();
     }
 
+    public void aplicarFiltros(List<CategoryStrategy> cat, List<SalarioStrategy> sal, List<ExperienciaStrategy> exp) {
+        this.categoriaFilters.clear();
+        this.categoriaFilters.addAll(cat);
+
+        this.salarioFilters.clear();
+        this.salarioFilters.addAll(sal);
+
+        this.experienciaFilters.clear();
+        this.experienciaFilters.addAll(exp);
+
+        notificar();
+    }
+
     // Notifica a todos los observadores del cambio de estado
-    private void notificar() {
+    public void notificar() {
         for (FiltroObserver o : observers) {
             o.update(categoriaFilters, salarioFilters, experienciaFilters);
         }

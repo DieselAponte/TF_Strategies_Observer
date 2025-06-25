@@ -8,9 +8,9 @@ import java.time.LocalDate;
         private String descripcion;
         private String tipo;
         private String experienciaRequerida;
-        private String sueldo;
+        private double sueldo;
 
-        public Trabajo(int id, String titulo, String descripcion, String tipo, String experienciaRequerida, String sueldo) {
+        public Trabajo(int id, String titulo, String descripcion, String tipo, String experienciaRequerida, double sueldo) {
             this.id = id;
             this.titulo = titulo;
             this.descripcion = descripcion;
@@ -59,11 +59,11 @@ import java.time.LocalDate;
             this.experienciaRequerida = experienciaRequerida;
         }
 
-        public String getSueldo() {
+        public double getSueldo() {
             return sueldo;
         }
 
-        public void setSueldo(String sueldo) {
+        public void setSueldo(double sueldo) {
             this.sueldo = sueldo;
         }
     }
